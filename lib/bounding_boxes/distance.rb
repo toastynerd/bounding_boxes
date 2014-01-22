@@ -8,8 +8,16 @@ module BB
     (Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(long1 - long2)) * 6371)
   end
 
+  def self.distance_km(point1, point2)
+    BB.distance_kilometers(point1, point2)
+  end
+
   def self.distance_miles(point1, point2)
     BB.kilometers_to_miles(BB.distance_kilometers(point1, point2))
+  end
+
+  def self.distance_mi(point1, point2)
+    BB.distance_miles(point1, point2)
   end
 
   def self.degrees_to_radians(number)

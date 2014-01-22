@@ -1,9 +1,10 @@
 module BB
-  class BoundingBox
-    attr_reader :max, :min
-
-    def initialize(input)
-      @input = input
+  #creates a bounding box that contains a circle
+  #with center of lat, long and radius of radius
+  #should be called as PointBoundingBox.new(lat, long, "radius<km || mi>")
+  class PointBoundingBox < BaseBoundingBox
+    def initialize(lat, long, radius)
+      @input = {latitude: lat, longitude: long, radius: radius}
       @input_radius = parse_radius
       @input_lat = parse_lat
       @input_long = parse_long
@@ -11,15 +12,10 @@ module BB
       @min = fetch_min
     end
 
-    def fetch(property)
-      raise KeyError unless self.respond_to?(property)
-      self.send(property)
-    end
-
     private
     def parse_radius
       parsed = @input.fetch(:radius).scan(/\d+|km|mi/)
-      @units = parsed[1] || "mi"
+      @preferred_units = parsed[1] || "mi"
       if @units == "km" then parsed[0].to_f else BB.miles_to_kilometers(parsed[0].to_f) end
     end
 
