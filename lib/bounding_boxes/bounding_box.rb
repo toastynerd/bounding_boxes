@@ -11,6 +11,11 @@ module BB
       @min = fetch_min
     end
 
+    def fetch(property)
+      raise KeyError unless self.respond_to?(property)
+      self.send(property)
+    end
+
     private
     def parse_radius
       parsed = @input.fetch(:radius).scan(/\d+|km|mi/)

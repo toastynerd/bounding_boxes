@@ -27,5 +27,15 @@ describe BB do
                               longitude: result.max[:longitude]},
                               @start_point).must_be_within_delta 20, 1
     end
+
+    it "should respond to a fetch request" do
+      result = BB::BoundingBox.new(@location_miles)
+      result.fetch(:max).must_be_instance_of Hash
+    end
+
+    it "must raise a key error if no such key exists" do
+      result = BB::BoundingBox.new(@location_miles)
+      assert_raises(KeyError){result.fetch(:something_not_there)}
+    end
   end
 end
