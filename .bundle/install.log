@@ -1,0 +1,4 @@
+# Logfile created on 2014-01-21 17:15:55 -0800 by logger.rb/41954
+I, [2014-01-21T17:15:55.776432 #13283]  INFO -- : 0:  rake (10.1.1) from /home/toasty/.rvm/gems/ruby-2.0.0-p353/specifications/rake-10.1.1.gemspec
+I, [2014-01-21T17:15:55.776848 #13283]  INFO -- : 0:  minitest (5.2.1) from /home/toasty/.rvm/gems/ruby-2.0.0-p353/specifications/minitest-5.2.1.gemspec
+I, [2014-01-21T17:15:55.777137 #13283]  INFO -- : 0:  bundler (1.5.1) from /home/toasty/.rvm/gems/ruby-2.0.0-p353/specifications/bundler-1.5.1.gemspec
