@@ -14,7 +14,7 @@ module BB
 
     private
     def parse_radius
-      parsed = @input.fetch(:radius).scan(/\d+|km|mi/)
+      parsed = @input.fetch(:radius).scan(/\d+\.?\d*|km|mi/)
       @preferred_units = parsed[1] || "mi"
       if @units == "km" then parsed[0].to_f else BB.miles_to_kilometers(parsed[0].to_f) end
     end

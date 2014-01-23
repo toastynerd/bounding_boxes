@@ -2,6 +2,7 @@ module BB
   #can create any type of bounding box and
   #will be able to split it into an array of bounding boxes
   class BoundingBox < BaseBoundingBox
+    attr_accessor :box
     def initialize(options = {})
       if options.has_key?(:radius)
         build_point_bounding_box(options)
@@ -21,15 +22,18 @@ module BB
       split_height = self.height / rows
 
       temp_array = []
+      temp_lat = self.min_lat
+      temp_long = self.min_long
 
-      row_offset = 0.0
-      rows.times do |row_num| 
-        column_offset = 0.0
-        columns.times do |column_num| 
-          temp_array << BB::PointBoundingBox.new(self.min_lat + row_offset, self.min_long + column_offset, "#{split_width}#{self.preferred_units}" )
-          column_offset += split_width
+      (rows - 1).times do |row_num| 
+        (columns - 1).times do |column_num| 
+          temp_array << BB::SquareBoundingBox.new(temp_lat,
+                                                  temp_long,
+                                                  "#{split_width}#{self.preferred_units}" )
+          temp_long = temp_array.last.max_long
         end
-        row_offset += split_height
+        temp_lat = temp_array.last.max_lat
+        temp_long = self.min_long
       end
       temp_array
     end

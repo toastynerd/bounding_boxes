@@ -7,8 +7,8 @@ Gem::Specification.new do |spec|
   spec.version = BB::VERSION
   spec.authors = ["Tyler Morgan"]
   spec.email = ["tylermorgan86@gmail.com"]
-  spec.summary = "methods for covnersion between point radiuses and bounding boxes"
-  spec.description = spec.summary
+  spec.summary = "geolocation bounding boxes"
+  spec.description = "a gem to convert point_radius geolocations to bounding boxes and split them into smaller boxes"
   spec.homepage = "https://github.com/tylermorgan86/bounding_boxes"
   spec.license = "MIT"
 

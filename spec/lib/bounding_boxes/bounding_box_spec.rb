@@ -31,10 +31,26 @@ describe BB::BoundingBox do
   describe "let's split it up" do
     before do
       @box = BB::BoundingBox.new( latitude: 47.6097, longitude: 122.3331, radius: "20mi" )
+      @result = @box.split_geo(10)
     end
 
+    it "should have the correct number of boxes" do
+      @result.size.must_equal 4
+    end
+      
+
     it "should split, like a mofoing banana, split!" do
-      assert_equal(1 , 1)
+      not_bigger = catch(:outside) do
+        @result.each do |box| 
+          if box.max_lat > @box.max_lat || box.max_long > @box.max_long || box.min_lat < @box.min_lat || box.min_long < @box.min_long
+            p "original, max: #{@box.max.inspect} min: #{@box.min.inspect}"
+            p "broke: max: #{box.max.inspect} min: #{box.min.inspect}"
+            throw :outside, true
+          end
+        end
+        false
+      end
+      not_bigger.must_equal false
     end
   end
 end
