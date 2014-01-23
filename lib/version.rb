@@ -1,0 +1,3 @@
+module BB
+  VERSION = "0.1.1"
+end
