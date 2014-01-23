@@ -29,7 +29,7 @@ module BB
         (columns - 1).times do |column_num| 
           temp_array << BB::SquareBoundingBox.new(temp_lat,
                                                   temp_long,
-                                                  "#{split_width}#{self.preferred_units}" )
+                                                  "#{max_size}#{self.preferred_units}" )
           temp_long = temp_array.last.max_long
         end
         temp_lat = temp_array.last.max_lat

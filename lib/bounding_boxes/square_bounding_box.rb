@@ -12,7 +12,7 @@ module BB
 
     private
     def parse_side_length(side_length)
-      parsed = side_length.scan(/\d+|mi|km/)
+      parsed = side_length.scan(/\d+\.?\d*|mi|km/)
       @preferred_units = parsed[1] || "mi"
       parsed[0].to_f
     end
