@@ -37,6 +37,7 @@ This would return an array of Bounding Boxes that have a height and width of 1 m
 as the original bounding box(a ten mile radius around the center of Seattle,WA).
 
 Each bounding box also has the following methods:
+```
 max  -> returns a hash containing the latitude and longitude of the northeastern most corner of the bounding box
 min  -> returns a hash containing the latitude and longitude of the southwestern most corner of the bounding box
 max_lat -> returns the latitude of max
@@ -45,3 +46,4 @@ max_long -> returns the longitude of max
 min_long -> returns the longitude of min
 height -> returns the height of the bounding box in the units specified during creation
 width -> returns the width of the bounding box in the unites specified during creation
+```
