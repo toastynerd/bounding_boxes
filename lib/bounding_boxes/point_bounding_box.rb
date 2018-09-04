@@ -1,48 +1,46 @@
 module BB
-  #creates a bounding box that contains a circle
-  #with center of lat, long and radius of radius
-  #should be called as PointBoundingBox.new(lat, long, "radius<km || mi>")
+  # creates a bounding box that contains a circle
+  # with center of latitude, longitude and radius of radius
   class PointBoundingBox < BaseBoundingBox
-    def initialize(lat, long, radius)
-      @input = {latitude: lat, longitude: long, radius: radius}
-      @input_radius = parse_radius
-      @input_lat = parse_lat
-      @input_long = parse_long
-      @max = fetch_max
-      @min = fetch_min
+    attr_reader :latitude, :longitude, :radius
+
+    def initialize(latitude, longitude, radius)
+      @radius    = parse_radius(radius)
+      @latitude  = BB.degrees_to_radians(latitude)
+      @longitude = BB.degrees_to_radians(longitude)
+
+      d_lat = delta_latitude
+      d_lon = delta_longitude
+
+      super(
+        BB.radians_to_degrees(@latitude - d_lat),
+        BB.radians_to_degrees(@longitude - d_lon),
+        BB.radians_to_degrees(@latitude + d_lat),
+        BB.radians_to_degrees(@longitude + d_lon),
+        @radius_units
+      )
     end
 
     private
-    def parse_radius
-      parsed = @input.fetch(:radius).scan(/\d+\.?\d*|km|mi/)
-      @preferred_units = parsed[1] || "mi"
-      if @units == "km" then parsed[0].to_f else BB.miles_to_kilometers(parsed[0].to_f) end
+
+    def parse_radius(radius)
+      parsed = radius.scan(/^(\d+(\.\d+)?)(km|mi)?$/).flatten
+      @radius_units = %w[km mi].include?(parsed.last) ? parsed.last : 'mi'
+
+      if @radius_units == 'km'
+        parsed.first.to_f
+      else
+        BB.miles_to_kilometers(parsed.first.to_f)
+      end
     end
 
-    def parse_lat
-      BB.degrees_to_radians(@input.fetch(:latitude))
+    def delta_latitude
+      BB.kilometers_to_radians(@radius)
     end
 
-    def parse_long
-      BB.degrees_to_radians(@input.fetch(:longitude))
-    end
-
-    def fetch_max
-      {latitude: BB.radians_to_degrees(@input_lat + delta_lat), 
-       longitude: BB.radians_to_degrees(@input_long + delta_long)}
-    end
-
-    def fetch_min
-      {latitude: BB.radians_to_degrees(@input_lat - delta_lat), 
-       longitude: BB.radians_to_degrees(@input_long - delta_long)}
-    end
-
-    def delta_lat
-      @input_radius / 6371
-    end
-
-    def delta_long
-      Math.asin(Math.sin(delta_lat)/Math.cos(@input_lat))
+    def delta_longitude
+      radius_radians = BB.kilometers_to_radians(@radius)
+      2 * Math.asin(Math.sin(radius_radians / 2) / Math.cos(@latitude))
     end
   end
 end

@@ -13,9 +13,9 @@ module BB
     end
 
     def width(units = @preferred_units)
-      BB.send("distance_#{units}".to_sym, {latitude: @max[:latitude], 
+      BB.send("distance_#{units}".to_sym, {latitude: @max[:latitude],
                          longitude: @max[:longitude]},
-                        {latitude: @max[:latitude], 
+                        {latitude: @max[:latitude],
                          longitude: @min[:longitude]})
     end
 
