@@ -25,8 +25,8 @@ module BB
       temp_lat = self.min_lat
       temp_long = self.min_long
 
-      (rows - 1).times do |row_num| 
-        (columns - 1).times do |column_num| 
+      (rows - 1).times do |row_num|
+        (columns - 1).times do |column_num|
           temp_array << BB::SquareBoundingBox.new(temp_lat,
                                                   temp_long,
                                                   "#{max_size}#{self.preferred_units}" )
@@ -46,8 +46,8 @@ module BB
     end
 
     def build_point_bounding_box(options)
-      @box = BB::PointBoundingBox.new(options.fetch(:latitude), 
-                                     options.fetch(:longitude), 
+      @box = BB::PointBoundingBox.new(options.fetch(:latitude),
+                                     options.fetch(:longitude),
                                      options.fetch(:radius))
       set_max_min
     end

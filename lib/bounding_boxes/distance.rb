@@ -1,11 +1,15 @@
 module BB
   def self.distance_kilometers(point1, point2)
-    lat1 = BB::degrees_to_radians(point1.fetch(:latitude))
-    long1 = BB::degrees_to_radians(point1.fetch(:longitude))
-    lat2 = BB::degrees_to_radians(point2.fetch(:latitude))
-    long2 = BB::degrees_to_radians(point2.fetch(:longitude))
+    lat1 = BB.degrees_to_radians(point1.fetch(:latitude))
+    lon1 = BB.degrees_to_radians(point1.fetch(:longitude))
+    lat2 = BB.degrees_to_radians(point2.fetch(:latitude))
+    lon2 = BB.degrees_to_radians(point2.fetch(:longitude))
 
-    (Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(long1 - long2)) * 6371)
+    distance_radians =
+      2 * Math.asin(Math.sqrt(Math.sin((lat1 - lat2) / 2)**2 +
+      Math.cos(lat1) * Math.cos(lat2) * Math.sin((lon1 - lon2) / 2)**2))
+
+    BB.radians_to_kilometers(distance_radians)
   end
 
   def self.distance_km(point1, point2)
@@ -26,6 +30,14 @@ module BB
 
   def self.radians_to_degrees(number)
     number * 180 / Math::PI
+  end
+
+  def self.kilometers_to_radians(number)
+    number / 6371.0
+  end
+
+  def self.radians_to_kilometers(number)
+    number * 6371.0
   end
 
   def self.kilometers_to_miles(number)
